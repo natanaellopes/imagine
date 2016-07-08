@@ -1,0 +1,20 @@
+<?php
+
+return [
+    'settings' => [
+        'displayErrorDetails' => false,
+        'db' => [
+            'dsn' => 'mysql:host=localhost;dbname=DATABASE',
+            'username' => 'USERNAME',
+            'password' => 'PASSWORD',
+        ],
+        'view' => [
+            'template_path' => __DIR__ . '/view',
+            'twig' => [
+                'cache' => __DIR__ . '/../data/cache/twig',
+                'debug' => true,
+                'auto_reload' => true,
+            ],
+        ],
+    ],
+];
