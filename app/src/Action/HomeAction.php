@@ -2,11 +2,12 @@
 
 namespace App\Action;
 
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Views\Twig;
 
-class HomeAction {
+class HomeAction
+{
 
     protected $view;
 
@@ -15,7 +16,8 @@ class HomeAction {
         $this->view = $view;
     }
 
-    public function __invoke (RequestInterface $request, ResponseInterface $response, $args) {
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $args)
+    {
         $data = array(
             'title' => "Imagine",
             'text' => 'a skeleton application Slim 3 based.'

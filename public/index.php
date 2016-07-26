@@ -5,7 +5,7 @@ $loader->addPsr4('App\\', '../app/src');
 
 $settings = require '../app/settings.php';
 
-if($settings['settings']['displayErrorDetails']) {
+if ($settings['settings']['displayErrorDetails']) {
     error_reporting(E_ALL);
     ini_set('display_errors', true);
 }

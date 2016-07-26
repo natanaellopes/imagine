@@ -25,7 +25,7 @@ class DataController
         $key = filter_var($data['key'], FILTER_SANITIZE_STRING);
         $value = filter_var($data['value'], FILTER_SANITIZE_STRING);
 
-        if(!$this->validate($key, $value)) {
+        if (!$this->validate($key, $value)) {
             return $response->withJson(['error' => 'Missing parameters'], 400);
         }
 
@@ -38,6 +38,22 @@ class DataController
             'key' => $current->key,
             'value' => $current->value,
         ], 201);
+    }
+
+    private function validate($key, $value)
+    {
+        $keyValidation = Validator::stringType()->notEmpty();
+        $valueValidation = Validator::stringType()->notEmpty();
+
+        return ($keyValidation->validate($key) && $valueValidation->validate($value));
+    }
+
+    private function getDataGateway()
+    {
+        if (!$this->dataGateway) {
+            $this->dataGateway = new DataTable($this->db);
+        }
+        return $this->dataGateway;
     }
 
     public function read(RequestInterface $request, ResponseInterface $response)
@@ -65,14 +81,14 @@ class DataController
 
         $current = $this->getDataGateway()->find($id);
 
-        if(!$current) {
+        if (!$current) {
             return $response->withJson(['message' => 'data not found'], 400);
         }
 
         $key = filter_var($data['key'], FILTER_SANITIZE_STRING);
         $value = filter_var($data['value'], FILTER_SANITIZE_STRING);
 
-        if(!$this->validate($key, $value)) {
+        if (!$this->validate($key, $value)) {
             return $response->withJson(['error' => 'Missing parameters'], 400);
         }
 
@@ -93,28 +109,12 @@ class DataController
 
         $current = $this->getDataGateway()->find($id);
 
-        if(!$current) {
+        if (!$current) {
             return $response->withJson(['message' => 'data not found'], 400);
         }
 
         $this->getDataGateway()->delete($id);
         return $response->withJson(['message' => 'deleted'], 204);
-    }
-
-    private function validate($key, $value)
-    {
-        $keyValidation = Validator::stringType()->notEmpty();
-        $valueValidation = Validator::stringType()->notEmpty();
-
-        return ($keyValidation->validate($key) && $valueValidation->validate($value));
-    }
-
-    private function getDataGateway()
-    {
-        if (!$this->dataGateway) {
-            $this->dataGateway = new DataTable($this->db);
-        }
-        return $this->dataGateway;
     }
 
 }
